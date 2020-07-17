@@ -12,12 +12,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type database struct {
-	// store map[int32]model.Todo
-}
+type database struct{}
 
 func connection() (db *sql.DB, err error) {
-	db, err = sql.Open("postgres", "host=127.0.0.1 port=5432 user=postgres "+
+	db, err = sql.Open("postgres", "host=postgres port=5432 user=postgres "+
 		"password=password database=db sslmode=disable")
 
 	if err != nil {
@@ -27,19 +25,21 @@ func connection() (db *sql.DB, err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	return db, err
 }
 
 func (o database) Create(obj model.Todo) error {
 
 	db, _ := connection()
+	_, err := db.Exec("CREATE TABLE todo2 (id int, title text, description text, createdat timestamp) ")
 
-	_, err := db.Exec("INSERT INTO todo2 (id, title, description, createdat) VALUES "+
-		"($1,$2,$3,$4);",
-		obj.ID,
-		obj.Title,
-		obj.Description,
-		time.Now())
+	// _, err := db.Exec("INSERT INTO todo2 (id, title, description, createdat) VALUES "+
+	// 	"($1,$2,$3,$4);",
+	// 	obj.ID,
+	// 	obj.Title,
+	// 	obj.Description,
+	// 	time.Now())
 
 	return err
 }

@@ -17,13 +17,12 @@ func main() {
 	// CREATE //
 	if err := memStore.Create(model.Todo{
 		ID:          1,
-		Title:       "First",
-		Description: "First Todo",
+		Title:       "First Todo",
+		Description: "Todo",
 		CreatedAt:   time.Now(),
 	}); err != nil {
 		log.Fatal(err)
 	}
-	log.Println("todo created")
 
 	// DETAIL //
 	obj, err := memStore.Detail(1)
@@ -40,5 +39,4 @@ func main() {
 	for _, val := range list {
 		log.Printf("ID : %d , DESC : %s \n", val.ID, val.Description)
 	}
-
 }
